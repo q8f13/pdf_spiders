@@ -2,8 +2,10 @@
 # doc88 spider based on selenium
 # author: q8f13
 # https://github.com/q8f13
+#
 # Change Log
-# 2019.7.1
+# 
+# - 2019.7.1
 #   Changed scanning method due to update of doc88 website
 #   Single page open & capture step no longer needed
 
