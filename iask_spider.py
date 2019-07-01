@@ -12,7 +12,8 @@ import time,random
 
 # PAGE = 'http://ishare.iask.sina.com.cn/f/21028483.html'
 
-REG_IMG_URL = '"http://sinacloud.net.*\d"'
+REG_IMG_URL = '"http://gslb.sinastorage.cn.*\d"'
+# REG_IMG_URL = '"http://sinacloud.net.*\d"'
 REG_JSON = '{"totalpage".*}'
 REG_FNAME = '="fname.*>'
 REG_VALID_URL = '^https?:/{2}ishare\.iask\.sina.*'
