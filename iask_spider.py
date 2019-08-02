@@ -5,6 +5,7 @@
 
 import re,json,os,sys
 import urllib.request
+from urllib.request import urlopen
 from reportlab.lib.pagesizes import A4, landscape, portrait
 from reportlab.pdfgen import canvas
 import shutil
@@ -12,7 +13,8 @@ import time,random
 
 # PAGE = 'http://ishare.iask.sina.com.cn/f/21028483.html'
 
-REG_IMG_URL = '"http://gslb.sinastorage.cn.*\d"'
+#  REG_IMG_URL = '"http://gslb.sinastorage.cn.*\d"'
+REG_IMG_URL = '"http://swf.ishare.down.sina.com.cn.*\d"'
 # REG_IMG_URL = '"http://sinacloud.net.*\d"'
 REG_JSON = '{"totalpage".*}'
 REG_FNAME = '="fname.*>'
@@ -48,8 +50,17 @@ def get_fname(content):
 # TODO:抓url保存成文件
 def download_image_to_file(url, idx, page_section, path):
 	url = re.sub('range=.*', 'range={}-{}'.format(page_section[0],page_section[1]), url)
-	urllib.request.urlretrieve(url, '{}{}.jpg'.format(path, idx))
-	time.sleep(random.uniform(0.7,1.2))
+	fpath = '{}{}.jpg'.format(path, idx)
+	if os.path.isfile(fpath):
+		return
+	print('downloading page %s:%s ...' % (idx,url))
+	with urlopen(url) as conn:
+		data = conn.read()
+		f = open(fpath, 'w+b')
+		f.write(data)
+		f.close()
+	# urllib.request.urlretrieve(url, '{}{}.jpg'.format(path, idx))
+	time.sleep(random.uniform(1.7,2.2))
 
 def conpdf(path, rmPics = True):
 	(w,h) = portrait(A4)
@@ -112,15 +123,18 @@ if not os.path.exists(fname[:-4]):
 path = r'./%s/' % fname[:-4]
 
 img_url = get_img_url(content)
+print(img_url)
 
 try:
 	for p, no in data['bytes'].items():
-		print('downloading page %s ...' % p)
 		download_image_to_file(img_url, p, no, path)
 except IOError as e:
 	print("Error occurs: %s" % e)
+	sys.exit()
 
 conpdf(path)
+
+print("Done. Enjoy")
 
 # print('img url: ', get_img_url(content))
 
