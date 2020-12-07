@@ -84,7 +84,8 @@ driver.get(url)
 
 # take a break, make sure to tell user make flash plugin automatically enabled
 # including expand some folded document
-raw_input('press Enter to start scanning, make sure you toggled flash on first, and expand all pages of document..\n')
+#  raw_input('press Enter to start scanning, make sure you toggled flash on first, and expand all pages of document..\n')
+input('press Enter to start scanning, make sure you toggled flash on first, and expand all pages of document..\n')
 
 # find the dom elements
 title_block = driver.find_element_by_class_name('doctopic')
@@ -109,7 +110,7 @@ for p in outer_pages:
             #  # EC.presence_of_element_located((By.TAG_NAME,'object'))
         #  )
     except Exception as e:
-        print e
+        print(e)
         print('failed on this one :%s' % count)
         continue
 
@@ -124,7 +125,8 @@ for p in outer_pages:
 
 # print('scanning done, taking screencaptures of every page, PLEASE DO NOT CLOSE THE BROWSER AUTOMATICALLY POPED\n')
 
-raw_input('press Enter when scanning done and scrolling to bottom')
+input('press Enter when scanning done and scrolling to bottom')
+#  raw_input('press Enter when scanning done and scrolling to bottom')
 
 
 # open single containers for single page loading and take screenshots
