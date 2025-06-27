@@ -77,6 +77,7 @@ url_digout_list =[]
 # make sure the flash content should be openned correctly
 option = webdriver.FirefoxOptions()
 option.set_preference("plugin.state.flash", 2)
+option.set_preference("executable_path", r'.\geckodriver.exe')
 
 # create main container
 driver = webdriver.Firefox(options=option)
@@ -88,9 +89,9 @@ driver.get(url)
 input('press Enter to start scanning, make sure you toggled flash on first, and expand all pages of document..\n')
 
 # find the dom elements
-title_block = driver.find_element_by_class_name('doctopic')
-title_name = title_block.find_element_by_tag_name('h1').get_attribute('title')
-outer_pages = driver.find_elements_by_class_name('outer_page')
+title_block = driver.find_element(By.CLASS_NAME, 'doctopic')
+title_name = title_block.find_element(By.TAG_NAME, 'h1').get_attribute('title')
+outer_pages = driver.find_elements(By.CLASS_NAME, 'outer_page')
 # inner_pages = driver.find_elements_by_class_name('inner_page')
 
 page_count = len(outer_pages)
@@ -103,8 +104,8 @@ print('start scanning elements, please scroll down to the page bottom\n')
 # for p in inner_pages:
 for p in outer_pages:
     try:
-        inner = p.find_element_by_class_name('inner_page')
-        pb = p.find_element_by_class_name('page_pb')
+        inner = p.find_element(By.CLASS_NAME,'inner_page')
+        pb = p.find_element(By.CLASS_NAME, 'page_pb')
         #  obj = WebDriverWait(p, 999).until(
             #  EC.text_to_be_present_in_element(pb, '')
             #  # EC.presence_of_element_located((By.TAG_NAME,'object'))
